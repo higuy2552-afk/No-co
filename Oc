@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ปิตซึม กาเซีย | Pitsam Gacia - Shadow Patron</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Animated Background Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 50%;
+            animation: float-particle 15s infinite;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+        }
+
+        @keyframes float-particle {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0c0c0c;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff69b4 0%, #ff1493 100%);
+            border-radius: 6px;
+            border: 2px solid #0c0c0c;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #ff1493 0%, #c71585 100%);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff69b4, #ff1493, #ff69b4);
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.1s;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(12, 12, 12, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 2px solid rgba(255, 105, 180, 0.3);
+            box-shadow: 0 5px 30px rgba(255, 20, 147, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 10px 0;
+            background: rgba(12, 12, 12, 0.99);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 18px;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            border-radius: 25px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            transform: scale(0.8);
+        }
+
+        nav a:hover::before,
+        nav a.active::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 20px 100px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image {
+            position: relative;
+            animation: hero-float 6s ease-in-out infinite;
+        }
+
+        @keyframes hero-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 
+                0 30px 80px rgba(255, 20, 147, 0.4),
+                0 0 0 2px rgba(255, 105, 180, 0.5);
+        }
+
+        .hero-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+        .hero-image-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.3) 0%, transparent 70%);
+            animation: glow-rotate 10s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glow-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            animation: fade-in-up 1s ease;
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff 0%, #ff69b4 50%, #ff1493 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            animation: text-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes text-glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.8)); }
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.6em;
+            color: #ff69b4;
+            margin-bottom: 25px;
+            font-style: italic;
+            font-family: 'Cinzel', serif;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .hero-content .info-text {
+            font-size: 1.1em;
+            color: #ccc;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .hero-content .quote {
+            font-size: 1.3em;
+            color: #fff;
+            border-left: 5px solid #ff69b4;
+            padding-left: 25px;
+            margin-top: 35px;
+            font-style: italic;
+            background: linear-gradient(90deg, rgba(255, 105, 180, 0.1) 0%, transparent 100%);
+            padding: 20px 25px;
+            border-radius: 0 15px 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content .quote::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 105, 180, 0.2), transparent);
+            animation: quote-shine 3s ease-in-out infinite;
+        }
+
+        @keyframes quote-shine {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+            background: linear-gradient(135deg, #fff 0%, #ff69b4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent 0%, #ff69b4 50%, transparent 100%);
+            border-radius: 2px;
+            animation: title-line 2s ease-in-out infinite;
+        }
+
+        @keyframes title-line {
+            0%, 100% { width: 200px; opacity: 1; }
+            50% { width: 250px; opacity: 0.7; }
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            border-radius: 25px;
+            padding: 45px;
+            margin-bottom: 35px;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 105, 180, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(255, 105, 180, 0.5);
+            box-shadow: 
+                0 20px 60px rgba(255, 20, 147, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .info-item {
+            background: rgba(255, 105, 180, 0.05);
+            padding: 28px;
+            border-radius: 18px;
+            border-left: 5px solid #ff69b4;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-item::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-item:hover::after {
+            opacity: 1;
+        }
+
+        .info-item:hover {
+            background: rgba(255, 105, 180, 0.12);
+            transform: translateX(12px) scale(1.02);
+            border-left-width: 7px;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.2);
+        }
+
+        .info-item h3 {
+            color: #ff69b4;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            position: relative;
+        }
+
+        .info-item p, .info-item li {
+            color: #ddd;
+            font-size: 1em;
+            position: relative;
+        }
+
+        .info-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-item li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-item li::before {
+            content: '❥';
+            color: #ff69b4;
+            position: absolute;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .info-item li:hover::before {
+            transform: scale(1.3) rotate(15deg);
+        }
+
+        /* Personality Section */
+        .personality-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .personality-column h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.9em;
+            margin-bottom: 30px;
+            color: #ff69b4;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .personality-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff69b4, transparent);
+        }
+
+        .personality-column ul {
+            list-style: none;
+        }
+
+        .personality-column li {
+            padding: 18px 25px;
+            margin-bottom: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border-left: 4px solid #ff69b4;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            padding-left: 55px;
+            cursor: default;
+        }
+
+        .personality-column li::before {
+            content: attr(data-icon);
+            position: absolute;
+            left: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.6em;
+            transition: transform 0.3s ease;
+        }
+
+        .personality-column li:hover {
+            background: rgba(255, 105, 180, 0.15);
+            transform: translateX(15px) scale(1.02);
+            border-left-width: 6px;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.2);
+        }
+
+        .personality-column li:hover::before {
+            transform: translateY(-50%) scale(1.3);
+        }
+
+        .external { border-left-color: #00ff88; }
+        .external::before { content: '✨' !important; }
+        
+        .internal { border-left-color: #ff1493; }
+        .internal::before { content: '🖤' !important; }
+
+        /* Business Deal Section */
+        .deal-section {
+            background: 
+                radial-gradient(ellipse at center, rgba(255, 105, 180, 0.08) 0%, transparent 70%);
+            position: relative;
+        }
+
+        .deal-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .deal-box {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.15) 0%, rgba(255, 20, 147, 0.08) 100%);
+            border: 2px solid rgba(255, 105, 180, 0.5);
+            border-radius: 35px;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(255, 20, 147, 0.3);
+        }
+
+        .deal-box::before {
+            content: '✦';
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            font-size: 4em;
+            color: rgba(255, 105, 180, 0.2);
+            animation: rotate 15s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .deal-quote {
+            font-size: 1.5em;
+            font-style: italic;
+            text-align: center;
+            color: #fff;
+            margin: 35px 0;
+            padding: 35px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            border-left: 6px solid #ff69b4;
+            border-right: 6px solid #ff69b4;
+            position: relative;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        .deal-quote:hover {
+            background: rgba(0, 0, 0, 0.5);
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+        }
+
+        .deal-quote::before,
+        .deal-quote::after {
+            content: '"';
+            font-size: 3em;
+            color: #ff69b4;
+            position: absolute;
+            opacity: 0.5;
+        }
+
+        .deal-quote::before {
+            top: 15px;
+            left: 25px;
+        }
+
+        .deal-quote::after {
+            bottom: -15px;
+            right: 25px;
+        }
+
+        .quality-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 45px;
+        }
+
+        .quality-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quality-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff69b4, #ff1493);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .quality-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .quality-card:hover {
+            background: rgba(255, 105, 180, 0.18);
+            transform: translateY(-10px) scale(1.03);
+            border-color: rgba(255, 105, 180, 0.6);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .quality-card h4 {
+            color: #ff69b4;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 18px;
+            font-size: 1.3em;
+        }
+
+        .quality-card small {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Quotes Section */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+        }
+
+        .quote-card {
+            background: rgba(255, 105, 180, 0.06);
+            padding: 40px;
+            border-radius: 25px;
+            border-left: 6px solid #ff69b4;
+            position: relative;
+            font-style: italic;
+            font-size: 1.15em;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+        }
+
+        .quote-card::before {
+            content: '"';
+            font-size: 5em;
+            color: rgba(255, 105, 180, 0.2);
+            position: absolute;
+            top: -15px;
+            left: 25px;
+            font-family: Georgia, serif;
+            transition: all 0.3s ease;
+        }
+
+        .quote-card:hover {
+            background: rgba(255, 105, 180, 0.18);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .quote-card:hover::before {
+            color: rgba(255, 105, 180, 0.4);
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            text-align: center;
+            padding: 80px 20px;
+            border-top: 3px solid rgba(255, 105, 180, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        footer::before {
+            content: '❥';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #ff69b4;
+            color: #ff69b4;
+            font-size: 1.8em;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
+            animation: footer-icon-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes footer-icon-pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        footer .final-quote {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6em;
+            color: #ff69b4;
+            margin-bottom: 25px;
+            font-style: italic;
+            animation: fade-in-up 1s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 50px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8em;
+            }
+
+            .hero-content .quote {
+                border-left: none;
+                border-top: 5px solid #ff69b4;
+                padding-left: 25px;
+                padding-top: 25px;
+                border-radius: 0 0 15px 15px;
+            }
+
+            .personality-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quotes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .deal-box {
+                padding: 45px 30px;
+            }
+
+            .section-title {
+                font-size: 2.3em;
+            }
+
+            nav ul {
+                gap: 12px;
+            }
+
+            nav a {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-content h1 {
+                font-size: 2.2em;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .glass-card {
+                padding: 30px 20px;
+            }
+
+            .quality-points {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-text {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5em;
+            color: #ff69b4;
+            animation: loading-pulse 1.5s ease-in-out infinite;
+            margin-top: 20px;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 105, 180, 0.2);
+            border-top-color: #ff69b4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes loading-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.95); }
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 105, 180, 0.6);
+        }
+
+        .back-to-top::before {
+            content: '↑';
+            color: #fff;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        /* Stagger Animation for Grid Items */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .stagger-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-item:nth-child(1) { transition-delay: 0.1s; }
+        .stagger-item:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-item:nth-child(3) { transition-delay: 0.3s; }
+        .stagger-item:nth-child(4) { transition-delay: 0.4s; }
+        .stagger-item:nth-child(5) { transition-delay: 0.5s; }
+        .stagger-item:nth-child(6) { transition-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">กำลังโหลด...</div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Background Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <ul>
+            <li><a href="#home" class="nav-link active">หน้าหลัก</a></li>
+            <li><a href="#info" class="nav-link">ข้อมูลพื้นฐาน</a></li>
+            <li><a href="#personality" class="nav-link">นิสัย</a></li>
+            <li><a href="#likes" class="nav-link">ชอบ/ไม่ชอบ</a></li>
+            <li><a href="#history" class="nav-link">ประวัติ</a></li>
+            <li><a href="#secrets" class="nav-link">ความลับ</a></li>
+            <li><a href="#deal" class="nav-link">ดีลโรงเรียน</a></li>
+            <li><a href="#quotes" class="nav-link">คำพูด</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-image">
+                <div class="hero-image-wrapper">
+                    <div class="hero-image-glow"></div>
+                    <img src="https://i.postimg.cc/wBZTgzKR/ngans-lpath-mi-m-ch-x-(31).jpg" alt="ปิตซึม กาเซีย">
+                </div>
+            </div>
+            <div class="hero-content">
+                <h1>ปิตซึม กาเซีย</h1>
+                <div class="subtitle">Pitsam Gacia | Don Pink</div>
+                <p class="info-text">
+                    อายุ: 42 ปี | ส่วนสูง: 199 ซม. | น้ำหนัก: 83 กก.<br>
+                    เผ่าพันธุ์: มนุษย์วิวัฒ | บทบาท: Top
+                </p>
+                <div class="quote">
+                    "เสือนอนกินที่อันตรายที่สุด คือเสือที่ยิ้มได้ทุกครั้งที่ต้องการฆ่า"
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Basic Info Section -->
+    <section id="info">
+        <div class="container">
+            <h2 class="section-title">✦ ข้อมูลพื้นฐาน ✦</h2>
+            <div class="glass-card fade-in">
+                <div class="info-grid">
+                    <div class="info-item stagger-item">
+                        <h3>ชื่อเต็ม</h3>
+                        <p>ปิตซึม กาเซีย (Pitsam Gacia)</p>
+                    </div>
+                    <div class="info-item stagger-item">
+                        <h3>ชื่อเล่นในวงการ</h3>
+                        <p>"ดอนพิงค์" (Don Pink) / "เสือชมพู"</p>
+                    </div>
+                    <div class="info-item stagger-item">
+                        <h3>อายุ</h3>
+                        <p>42 ปี</p>
+                    </div>
+                    <div class="info-item stagger-item">
+                        <h3>ส่วนสูง/น้ำหนัก</h3>
+                        <p>199 ซม. / 83 กก.</p>
+                    </div>
+                    <div class="info-item stagger-item">
+                        <h3>เพศ</h3>
+                        <p>ชาย</p>
+                    </div>
+                    <div class="info-item stagger-item">
+                        <h3>บทบาท</h3>
+                        <p>Top (รุก)</p>
+                    </div>
+                    <div class="info-item stagger-item">
+                        <h3>เผ่าพันธุ์</h3>
+                        <p>มนุษย์วิวัฒ (ร่างกายแข็งแกร่งกว่ามนุษย์ทั่วไป 3 เท่า แต่มีจุดอ่อนคือหากต่อสู้เกิน 30 นาที กล้ามเนื้อจะร้อนจัดและเริ่มสลายตัว)</p>
+                    </div>
+                    <div class="info-item stagger-item">
+                        <h3>สถานะ</h3>
+                        <p>ผู้สนับสนุนหลักเบื้องหลัง (Shadow Patron & Main Investor)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personality Section -->
+    <section id="personality" style="background: rgba(255, 105, 180, 0.02);">
+        <div class="container">
+            <h2 class="section-title">✦ นิสัยใจคอ ✦</h2>
+            <div class="personality-grid">
+                <div class="glass-card fade-in">
+                    <div class="personality-column">
+                        <h3>✨ ภายนอก</h3>
+                        <ul>
+                            <li data-icon="✨">สุภาพ นุ่มนวล ยิ้มง่าย พูดจาไพเราะเหมือนนักธุรกิจใจดี</li>
+                            <li data-icon="✨">ชอบสวมเสื้อสีชมพูหรือ accessorize ด้วยสีชมพูในชุดดำ</li>
+                            <li data-icon="✨">ดูเป็นมิตร ใจเย็น ไม่เคยขึ้นเสียง</li>
+                            <li data-icon="✨">ชอบชงนมอุ่นดื่มตอนประชุมสำคัญ</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="glass-card fade-in">
+                    <div class="personality-column">
+                        <h3>🖤 ภายใน</h3>
+                        <ul>
+                            <li data-icon="🖤">เจ้าเล่ห์ชั้นครู - วางแผนล่วงหน้า 10 ขั้นตอน</li>
+                            <li data-icon="🖤">ไร้ความปราณี - ไม่เคยแสดงอารมณ์โกรธเวลาสั่ง "จัดการ"</li>
+                            <li data-icon="🖤">ควบคุมสมบูรณ์แบบ - ใช้ความควบคุมเป็นอาวุธหลัก</li>
+                            <li data-icon="🖤">จงรักภักดีเฉพาะคนของตน - มีรหัสจริยธรรมของตัวเอง</li>
+                            <li data-icon="🖤">หลงตัวเองอย่างมีเหตุผล - เชื่อมั่นว่าตนเองเกิดมาเพื่อปกครองโลกใต้ดิน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Likes & Dislikes Section -->
+    <section id="likes">
+        <div class="container">
+            <h2 class="section-title">✦ สิ่งที่ชอบและไม่ชอบ ✦</h2>
+            <div class="personality-grid">
+                <div class="glass-card fade-in">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.9em; margin-bottom: 30px; color: #00ff88; position: relative; padding-bottom: 15px;">
+                        💗 สิ่งที่ชอบ
+                        <span style="position: absolute; bottom: 0; left: 0; width: 100px; height: 3px; background: linear-gradient(90deg, #00ff88, transparent);"></span>
+                    </h3>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px;">
+                        <h3>1. นมอุ่น</h3>
+                        <p>ต้องเป็นนมออร์แกนิคจากฟาร์มในอิตาลี อุ่นที่อุณหภูมิ 45°C พอดี ดื่มจากแก้วเซรามิกสีชมพูเท่านั้น<br>
+                        <em style="color: #ff69b4; margin-top: 10px; display: block;">เหตุผล: เพราะตอนเด็ก แม่จะชงนมอุ่นให้ก่อนนอนทุกคืน ก่อนที่ครอบครัวจะถูกคู่แข่งทางธุรกิจสังหาร</em></p>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px;">
+                        <h3>2. สีชมพู</h3>
+                        <p>ชอบเพราะเป็นสีที่ไม่มีใครคาดคิดว่าเป็นสีของมาเฟีย ทำให้ศัตรูประมาท</p>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px;">
+                        <h3>3. การเล่นเปียโน</h3>
+                        <p>เล่นเพลงคลาสสิกได้คล่องแคล่ว ใช้เป็นข้ออ้างในการพบปะผู้มีอิทธิพล</p>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px;">
+                        <h3>4. การอ่านหนังสือปรัชญา</h3>
+                        <p>โดยเฉพาะ "The Prince" ของ Machiavelli อ่านแล้ว 47 รอบ</p>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px;">
+                        <h3>5. การทำสวนกุหลาบ</h3>
+                        <p>มีสวนกุหลาบสีชมพูส่วนตัว ใช้เป็นสถานที่ "เจรจาธุรกิจ"</p>
+                    </div>
+                    <div class="info-item stagger-item">
+                        <h3>6. ความเงียบ</h3>
+                        <p>ชอบนั่งเงียบๆ ในห้องทำงานมืดๆ ฟังเสียงนาฬิกา</p>
+                    </div>
+                </div>
+
+                <div class="glass-card fade-in">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.9em; margin-bottom: 30px; color: #ff1493; position: relative; padding-bottom: 15px;">
+                        🖤 สิ่งที่ไม่ชอบ
+                        <span style="position: absolute; bottom: 0; left: 0; width: 100px; height: 3px; background: linear-gradient(90deg, #ff1493, transparent);"></span>
+                    </h3>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px; border-left-color: #ff1493;">
+                        <h3>1. คนที่พูดมากเกินไป</h3>
+                        <p>ถือเป็นการเสียมารยาทและแสดงถึงความอ่อนแอ<br>
+                        <em style="color: #ff69b4; margin-top: 10px; display: block;">ผลลัพธ์: มักจะ "ปิดปาก" คนเหล่านั้นอย่างถาวร</em></p>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px; border-left-color: #ff1493;">
+                        <h3>2. การถูกหักหลัง</h3>
+                        <p>แม้เพียงครั้งเดียว ก็ไม่มีโอกาสครั้งที่สอง<br>
+                        <em style="color: #ff69b4; margin-top: 10px; display: block;">คำพูด: "ฉันให้อภัยได้ แต่ฉันไม่ลืม"</em></p>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px; border-left-color: #ff1493;">
+                        <h3>3. อากาศร้อน</h3>
+                        <p>เพราะทำให้ร่างกายวิวัฒของตัวเองร้อนเกินไป<br>
+                        <em style="color: #ff69b4; margin-top: 10px; display: block;">จุดอ่อน: ต้องอยู่ในห้องแอร์เสมอ</em></p>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px; border-left-color: #ff1493;">
+                        <h3>4. คนขี้ขลาด</h3>
+                        <p>เกลียดคนที่ทรยศเพื่อเอาตัวรอด</p>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-bottom: 20px; border-left-color: #ff1493;">
+                        <h3>5. การถูกมองข้าม</h3>
+                        <p>ไม่ชอบที่ใครมาประเมินค่าเขาต่ำเพราะสีชมพูหรือบุคลิกนุ่มนวล</p>
+                    </div>
+                    <div class="info-item stagger-item" style="border-left-color: #ff1493;">
+                        <h3>6. ความหวานเลี่ยน</h3>
+                        <p>ไม่ชอบขนมหวานเกินไป แต่ชอบความขมของเอสเปรสโซ่</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="history" style="background: rgba(255, 105, 180, 0.02);">
+        <div class="container">
+            <h2 class="section-title">✦ ประวัติโดยย่อ ✦</h2>
+            <div class="glass-card fade-in">
+                <div class="info-item stagger-item" style="margin-bottom: 25px;">
+                    <h3>วัยเด็ก (0-12 ปี)</h3>
+                    <p>เกิดในตระกูลกาเซีย ตระกูลมาเฟียเก่าแก่ที่ควบคุมธุรกิจท่าเรือและโรงเรียนเอกชนทั่วประเทศ เป็นลูกชายคนโตของดอนกาเซีย</p>
+                </div>
+                <div class="info-item stagger-item" style="margin-bottom: 25px; background: rgba(255, 20, 147, 0.15);">
+                    <h3>จุดเปลี่ยน (12 ปี)</h3>
+                    <p>เห็นพ่อถูกยิงต่อหน้าต่อตาขณะกำลังชงนมอุ่นให้ โดยคู่แข่งทางธุรกิจ ครอบครัวถูกสังหาร</p>
+                </div>
+                <div class="info-item stagger-item" style="margin-bottom: 25px;">
+                    <h3>วัยรุ่น (18-25 ปี)</h3>
+                    <p>ถูกส่งไปเรียนที่สวิสเซอร์แลนด์ เรียนจบ MBA และปรัชญาการเมือง ระหว่างนั้นฝึกฝนศิลปะการต่อสู้และพัฒนาความสามารถพิเศษของมนุษย์วิวัฒ</p>
+                </div>
+                <div class="info-item stagger-item" style="margin-bottom: 25px;">
+                    <h3>วัยผู้ใหญ่ (25-35 ปี)</h3>
+                    <p>กลับมาประเทศบ้านเกิด ยึดอำนาจคืนจากคู่แข่งด้วยกลยุทธ์ที่โหดเหี้ยมแต่ฉลาดหลักแหลม ใช้เวลาเพียง 3 ปีในการรวมอำนาจทั้งหมด</p>
+                </div>
+                <div class="info-item stagger-item">
+                    <h3>ปัจจุบัน (35-42 ปี)</h3>
+                    <p>เป็น "ดอน" ของตระกูลกาเซีย ควบคุมธุรกิจท่าเรือ 3 แห่ง และธุรกิจสีเทาอีกมากมาย มีเครือข่ายไปทั่วโลก</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secrets Section -->
+    <section id="secrets">
+        <div class="container">
+            <h2 class="section-title">✦ ความลับมืดดำ ✦</h2>
+            <div class="glass-card fade-in">
+                <div class="info-grid">
+                    <div class="info-item stagger-item" style="border-left-color: #ff1493;">
+                        <h3>1. นมอุ่นในตู้เซฟ</h3>
+                        <p>เก็บนมอุ่นขวดเล็กๆ ในตู้เซฟเสมอ เป็นขวดเดียวกับที่พ่อชงให้วันสุดท้าย</p>
+                    </div>
+                    <div class="info-item stagger-item" style="border-left-color: #ff1493;">
+                        <h3>2. บัญชีดำ</h3>
+                        <p>มีบัญชีดำในโทรศัพท์ 47 ชื่อ ทุกคนที่เคยเกี่ยวข้องกับการตายของพ่อ</p>
+                    </div>
+                    <div class="info-item stagger-item" style="border-left-color: #ff1493;">
+                        <h3>3. ไม่เคยหลับตาสนิท</h3>
+                        <p>ไม่เคยหลับตาสนิทมากว่า 30 ปี ต้องมียามคุ้มกันตลอด 24 ชม.</p>
+                    </div>
+                    <div class="info-item stagger-item" style="border-left-color: #ff1493;">
+                        <h3>4. ร่างกายเสื่อมสภาพ</h3>
+                        <p>ร่างกายเริ่มแสดงอาการของมนุษย์วิวัฒที่เสื่อมสภาพ ต้องฉีดยาพิเศษทุกสัปดาห์</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Deal Section -->
+    <section id="deal" class="deal-section">
+        <div class="container deal-container">
+            <h2 class="section-title">✦ ดีลลับกับทางโรงเรียน ✦</h2>
+            <div class="deal-box fade-in">
+                <h3 style="font-family: 'Cinzel', serif; font-size: 2.2em; text-align: center; color: #ff69b4; margin-bottom: 25px;">
+                    ผู้สนับสนุนหลักเบื้องหลัง
+                </h3>
+                <p style="text-align: center; font-size: 1.2em; margin-bottom: 35px; color: #ccc;">
+                    พันธมิตรทางธุรกิจ: ผู้อำนวยการ [ชื่อโรงเรียน - ยังไม่ตั้งชื่อ]
+                </p>
+                
+                <div class="deal-quote">
+                    ผมจะอัดฉีดเงินทุนให้คุณแบบไม่จำกัดยอด เพื่อสร้างโรงเรียนให้หรูหราและทันสมัยที่สุดเท่าที่เคยมีมา... 
+                    แต่สิ่งเดียวที่ผมต้องการคือ 'คุณภาพ' ของผลผลิตที่คุณส่งออกมา
+                </div>
+
+                <h3 style="font-family: 'Cinzel', serif; font-size: 1.6em; color: #ff69b4; margin: 50px 0 25px; text-align: center;">
+                    นิยามคำว่า "คุณภาพ" ในมุมมองของปิตซึม
+                </h3>
+
+                <div class="quality-points">
+                    <div class="quality-card stagger-item">
+                        <h4>1. การคัดกรองหัวกะทิ<br><small style="color: #fff;">(The Elite Filter)</small></h4>
+                        <p>โรงเรียนต้องผลิตนักเรียนที่เป็น "ยอดคน" ทั้งสติปัญญา ร่างกาย และวาทศิลป์ ปิตซึมใช้โรงเรียนแห่งนี้ sebagai <strong>"แหล่งคัดสรรบุคลากร"</strong> เข้ามาทำงานในองค์กรใต้ดินของเขาแบบเนียนๆ โดยที่สังคมภายนอกไม่มีวันรู้</p>
+                    </div>
+                    <div class="quality-card stagger-item">
+                        <h4>2. เครื่องฟอกเงินชั้นเลิศ<br><small style="color: #fff;">(The Perfect Front)</small></h4>
+                        <p>ชื่อเสียงและค่าเทอมระดับมหาโหดของโรงเรียน คือเครื่องฟอกเงินที่สมบูรณ์แบบที่สุด เม็ดเงินสีเทาของเขาจะถูกเปลี่ยนเป็น "ทุนการศึกษา" และ "งบประมาณก่อสร้าง" อย่างถูกกฎหมาย</p>
+                    </div>
+                    <div class="quality-card stagger-item">
+                        <h4>3. ความสมบูรณ์แบบ<br><small style="color: #fff;">(Flawless Reputation)</small></h4>
+                        <p>โรงเรียนต้องไม่มีข่าวฉาว ต้องดูสูงส่งและแตะต้องไม่ได้ เพราะชื่อเสียงของโรงเรียนคือโล่ป้องกันตัวของเขาเอง หากโรงเรียนเสียชื่อ ปิตซึมจะมองว่าเป็นการ "ผิดสัญญา"</p>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="margin-top: 50px;">
+                    <h3 style="font-family: 'Cinzel', serif; color: #ff69b4; margin-bottom: 25px; font-size: 1.6em;">
+                        🤝 ความสัมพันธ์กับผู้อำนวยการ
+                    </h3>
+                    <div class="info-grid">
+                        <div class="info-item stagger-item">
+                            <h3>ภายนอก</h3>
+                            <p>ปิตซึมจะวางตัวเป็น "ผู้ใจบุญ" และ "นักธุรกิจทุนนิยม" ที่เคารพให้เกียรติผู้อำนวยการเสมอ มักจะส่งช่อดอกไม้สีชมพูหรือของขวัญหรูไปให้ในวันสำคัญ</p>
+                        </div>
+                        <div class="info-item stagger-item">
+                            <h3>ภายใน</h3>
+                            <p>ปิตซึมถือหางผู้อำนวยการอย่างเบ็ดเสร็จเด็ดขาด ผอ. เป็นเพียง "หุ่นเชิด" ที่ต้องทำตามเงื่อนไขของเขา</p>
+                        </div>
+                    </div>
+                    <div class="info-item stagger-item" style="margin-top: 25px; background: rgba(255, 20, 147, 0.15); border-left-color: #ff1493;">
+                        <h3>⚠️ กฎเหล็ก</h3>
+                        <p>ปิตซึมจะไม่ก้าวก่ายวิธีบริหารของ ผอ. ตราบใดที่ "คุณภาพ" ยังอยู่ในเกณฑ์ที่เขาพอใจ แต่หากเมื่อไหร่ก็ตามที่มาตรฐานของโรงเรียนตกต่ำ หรือ ผอ. เริ่มทำเรื่องเสี่ยงที่อาจกระทบกระเทือนถึงเขา... <strong style="color: #ff69b4;">สายไฟแห่งเงินทุนจะถูกตัดทิ้งทันที</strong> และไม่มีใครรู้ว่า ผอ. คนนั้นจะเจออะไรหลังจากนั้น</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Goals Section -->
+    <section id="goals" style="background: rgba(255, 105, 180, 0.02);">
+        <div class="container">
+            <h2 class="section-title">✦ เป้าหมาย ✦</h2>
+            <div class="personality-grid">
+                <div class="glass-card fade-in">
+                    <h3 style="font-family: 'Cinzel', serif; color: #00ff88; font-size: 1.6em; margin-bottom: 25px;">🎯 ระยะสั้น</h3>
+                    <ul style="list-style: none;">
+                        <li style="padding: 18px; margin-bottom: 15px; background: rgba(0, 255, 136, 0.08); border-radius: 12px; border-left: 4px solid #00ff88; transition: all 0.3s ease;">✦ ขยายเครือข่ายโรงเรียนไปทั่วประเทศ</li>
+                        <li style="padding: 18px; background: rgba(0, 255, 136, 0.08); border-radius: 12px; border-left: 4px solid #00ff88; transition: all 0.3s ease;">✦ กำจัดคู่แข่งที่เหลืออยู่ในบัญชีดำ</li>
+                    </ul>
+                </div>
+                <div class="glass-card fade-in">
+                    <h3 style="font-family: 'Cinzel', serif; color: #ff69b4; font-size: 1.6em; margin-bottom: 25px;">🎯 ระยะยาว</h3>
+                    <ul style="list-style: none;">
+                        <li style="padding: 18px; margin-bottom: 15px; background: rgba(255, 105, 180, 0.08); border-radius: 12px; border-left: 4px solid #ff69b4; transition: all 0.3s ease;">✦ สร้างอาณาจักรที่ไม่มีใครล้มได้</li>
+                        <li style="padding: 18px; margin-bottom: 15px; background: rgba(255, 105, 180, 0.08); border-radius: 12px; border-left: 4px solid #ff69b4; transition: all 0.3s ease;">✦ หาทางรักษาอาการของร่างกายวิวัฒ</li>
+                        <li style="padding: 18px; background: rgba(255, 105, 180, 0.08); border-radius: 12px; border-left: 4px solid #ff69b4; transition: all 0.3s ease;">✦ แก้แค้นทุกคนที่เกี่ยวข้องกับการตายของพ่อ (เหลืออีก 3 คน)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quotes Section -->
+    <section id="quotes">
+        <div class="container">
+            <h2 class="section-title">✦ คำพูดติดปาก ✦</h2>
+            <div class="quotes-grid">
+                <div class="quote-card stagger-item">
+                    "นมอุ่นๆ กับความเงียบ คือสิ่งที่ฉันต้องการก่อนตัดสินใจฆ่าใคร"
+                </div>
+                <div class="quote-card stagger-item">
+                    "สีชมพูไม่ใช่สีของความอ่อนแอ แต่เป็นสีของเลือดที่แห้งแล้ว"
+                </div>
+                <div class="quote-card stagger-item">
+                    "ฉันไม่เคยโกรธ ฉันแค่... จัดการ"
+                </div>
+                <div class="quote-card stagger-item">
+                    "ธุรกิจคือการลงทุน ความตายคือผลตอบแทน"
+                </div>
+                <div class="quote-card stagger-item">
+                    "คุณทำหน้าที่เป็นครูบาอาจารย์ที่แสนดีต่อไปเถอะครับผอ. ส่วนเรื่องเงินทองและ 'ขยะ' ที่ต้องกำจัดทิ้งนอกโรงเรียน... ทิ้งให้เป็นหน้าที่ของผม"
+                </div>
+                <div class="quote-card stagger-item">
+                    "ผมไม่ได้ซื้อโรงเรียนของคุณ ผมแค่... ลงทุนใน 'อนาคต' ที่ผมกำหนดรูปร่างมันได้"
+                </div>
+                <div class="quote-card stagger-item">
+                    "คุณภาพคือทุกสิ่ง นักเรียนของคุณต้องคมกริบเหมือนมีด และเรียบเนียนเหมือนแพรไหม... ถ้ามันทื่อเมื่อไหร่ ผมคงต้องเปลี่ยนคนลับมีดใหม่"
+                </div>
+                <div class="quote-card stagger-item">
+                    "สัญญาของเราชัดเจน不是吗ครับ? คุณสร้างชื่อเสียง ผมสร้างฐานะ เราต่างได้สิ่งที่ต้องการ... ตราบใดที่คุณไม่ลืมว่าใครคือคนจ่ายบิล"
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strengths & Weaknesses -->
+    <section id="strengths" style="background: rgba(255, 105, 180, 0.02);">
+        <div class="container">
+            <h2 class="section-title">✦ จุดแข็ง/จุดอ่อน ✦</h2>
+            <div class="personality-grid">
+                <div class="glass-card fade-in">
+                    <h3 style="font-family: 'Cinzel', serif; color: #00ff88; font-size: 1.6em; margin-bottom: 25px;">⚡ จุดแข็ง</h3>
+                    <ul style="list-style: none;">
+                        <li style="padding: 15px; margin-bottom: 12px; background: rgba(0, 255, 136, 0.08); border-radius: 10px; border-left: 4px solid #00ff88;">✓ วางแผนเก่ง มองการณ์ไกล</li>
+                        <li style="padding: 15px; margin-bottom: 12px; background: rgba(0, 255, 136, 0.08); border-radius: 10px; border-left: 4px solid #00ff88;">✓ ควบคุมอารมณ์ได้ดีเยี่ยม</li>
+                        <li style="padding: 15px; margin-bottom: 12px; background: rgba(0, 255, 136, 0.08); border-radius: 10px; border-left: 4px solid #00ff88;">✓ ร่างกายแข็งแกร่ง (ในระยะสั้น)</li>
+                        <li style="padding: 15px; margin-bottom: 12px; background: rgba(0, 255, 136, 0.08); border-radius: 10px; border-left: 4px solid #00ff88;">✓ มีเครือข่ายกว้างขวาง</li>
+                        <li style="padding: 15px; background: rgba(0, 255, 136, 0.08); border-radius: 10px; border-left: 4px solid #00ff88;">✓ ฉลาดหลักแหลม ไม่ประมาท</li>
+                    </ul>
+                </div>
+                <div class="glass-card fade-in">
+                    <h3 style="font-family: 'Cinzel', serif; color: #ff1493; font-size: 1.6em; margin-bottom: 25px;">⚠️ จุดอ่อน</h3>
+                    <ul style="list-style: none;">
+                        <li style="padding: 15px; margin-bottom: 12px; background: rgba(255, 20, 147, 0.08); border-radius: 10px; border-left: 4px solid #ff1493;">✗ ร่างกายมีเวลาจำกัดในการต่อสู้ (30 นาที)</li>
+                        <li style="padding: 15px; margin-bottom: 12px; background: rgba(255, 20, 147, 0.08); border-radius: 10px; border-left: 4px solid #ff1493;">✗ หลงแค้นเรื่องพ่อ</li>
+                        <li style="padding: 15px; margin-bottom: 12px; background: rgba(255, 20, 147, 0.08); border-radius: 10px; border-left: 4px solid #ff1493;">✗ ต้องการความสมบูรณ์แบบเกินไป</li>
+                        <li style="padding: 15px; background: rgba(255, 20, 147, 0.08); border-radius: 10px; border-left: 4px solid #ff1493;">✗ ไว้ใจใครยาก</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="final-quote">
+            "อย่าประเมินเสือชมพูต่ำเกินไป เพราะรอยยิ้มที่อ่อนโยนที่สุด มักซ่อนมีดที่คมที่สุด"
+        </div>
+        <p style="color: #666; font-size: 0.95em;">
+            ❥*⁠.⁠✧ Profile OC: ปิตซึม กาเซีย *⁠.⁠✧<br>
+            <small style="color: #ff69b4;">Shadow Patron & Main Investor</small>
+        </p>
+    </footer>
+
+    <script>
+        // Create Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Remove loading screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+                createParticles();
+            }, 800);
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements
+        document.querySelectorAll('.fade-in, .stagger-item').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 100;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Active navigation highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Add hover effect to cards
+        document.querySelectorAll('.glass-card, .info-item, .quote-card, .quality-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+        });
+
+        // Parallax effect for hero section (fixed version - no overlapping)
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Add typing effect to hero subtitle
+        const subtitle = document.querySelector('.hero-content .subtitle');
+        if (subtitle) {
+            const text = subtitle.textContent;
+            subtitle.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    subtitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            
+            setTimeout(typeWriter, 1000);
+        }
+
+        // Add magnetic effect to navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const moveX = (x - centerX) * 0.3;
+                const moveY = (y - centerY) * 0.3;
+                
+                this.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        console.log('✨ Profile OC: ปิตซึม กาเซีย loaded successfully!');
+    </script>
+</body>
+</html>
+
